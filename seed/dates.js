@@ -1,15 +1,15 @@
 
 const casual = require('casual');
-const Dates = require('../pg/models');
+const Date = require('../pg/models');
 const {doNumTimes} = require('../utils/helper-functions')
 const randomUserId = Math.floor(Math.random() * 30);
 
 const generateFakeDate = () => {
-  const user = {
+  const date = {
   name: casual.full_name,
-  zipcode: casual.zip
+  zipcode: 60647,
 }
-  return User.build(user);
+  return Date.build(date);
 }
 
 const makeDates = (date) => {

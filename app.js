@@ -19,48 +19,48 @@ const app = express();
 const notProduction = process.env.NODE_ENV !== 'production';
 if (notProduction) require('../secrets');
 
-// passport registration
-passport.serializeUser((user, done) => done(null, user.id));
-passport.deserializeUser((id, done) => {
-  return pg.models.user.findById(id)
-    .then(user => done(null, user))
-    .catch(done)
-});
+// // passport registration
+// passport.serializeUser((user, done) => done(null, user.id));
+// passport.deserializeUser((id, done) => {
+//   return pg.models.user.findById(id)
+//     .then(user => done(null, user))
+//     .catch(done)
+// });
 
-const createApp = () => {
+// const createApp = () => {
 
-  // Use Morgan Logging (but not when running tests)
-  if (process.env.NODE_ENV !== 'test') app.use(morgan('dev'));
+//   // Use Morgan Logging (but not when running tests)
+//   if (process.env.NODE_ENV !== 'test') app.use(morgan('dev'));
 
-  // Parse request bodies
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: true }));
+//   // Parse request bodies
+//   app.use(bodyParser.json());
+//   app.use(bodyParser.urlencoded({ extended: true }));
 
-  // Initialize passport with the session (defined above)
-  app.use(session({
-    secret: process.env.SESSION_SECRET || 'super secret shhhhhhh...',
-    store: sessionStore,
-    resave: false,
-    saveUninitialized: false,
-  }));
-  app.use(passport.initialize());
-  app.use(passport.session());
+//   // Initialize passport with the session (defined above)
+//   app.use(session({
+//     secret: process.env.SESSION_SECRET || 'super secret shhhhhhh...',
+//     store: sessionStore,
+//     resave: false,
+//     saveUninitialized: false,
+//   }));
+//   app.use(passport.initialize());
+//   app.use(passport.session());
 
-  app.use('/graphql', expressGraphql( (req, res) => ({
-    schema,
-    pretty: true,
-    graphiql: notProduction,
-    context: { req, res, models },
-  })));
+//   app.use('/graphql', expressGraphql( (req, res) => ({
+//     schema,
+//     pretty: true,
+//     graphiql: notProduction,
+//     context: { req, res, models },
+//   })));
 
-  // static file-serving middleware
-  app.use(express.static(path.join(__dirname, '..', 'public')));
+//   // static file-serving middleware
+//   app.use(express.static(path.join(__dirname, '..', 'public')));
 
-  // sends index.html
-  app.use('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public/index.html'))
-  });
-}
+//   // sends index.html
+//   app.use('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '..', 'public/index.html'))
+//   });
+// }
 
 if (require.main === module) {
   sessionStore.sync()

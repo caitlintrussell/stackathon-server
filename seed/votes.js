@@ -1,15 +1,16 @@
 
 const casual = require('casual');
-const Dates = require('../pg/models');
+const Vote = require('../pg/models');
 const {doNumTimes} = require('../utils/helper-functions')
 const randomUserId = Math.floor(Math.random() * 30);
 
+const sampleCategories = ['mexican', 'pizza', 'italian', 'chinese', 'thai', 'burgers', 'brunch', 'bakery', 'sandwiches', 'thai', 'vegetarian', 'comfort food', 'japanese', 'seafood', 'mediterranean', 'spanish', 'southern', 'cajun', 'pub', 'indian', 'halal', 'ethiopian', 'vegan', 'gastropub', 'greek', 'coffee', 'lebanese'];
+
 const generateFakeVote = () => {
-  const user = {
-  name: casual.full_name,
-  zipcode: casual.zip
+  const vote = {
+    value: sampleCategories[Math.floor(Math.random() * (sampleCategories.length + 1))]
 }
-  return User.build(user);
+  return Vote.create(vote);
 }
 
 const makeVote = (vote) => {
@@ -18,7 +19,7 @@ const makeVote = (vote) => {
 
 const seedVotes = async () => {
   try {
-    console.log('Seeding dates...');
+    console.log('Seeding votes...');
     await makeVote(generateFakeVote())
   }
   catch (err) {

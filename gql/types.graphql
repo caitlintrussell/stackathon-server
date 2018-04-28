@@ -58,10 +58,10 @@ type Query {
   # Get All Dates (admins only)
   allDates: [Date]
   # Get a particular date by its id (admins only)
-  DateById(id: Int!): Date
+  dateById(id: Int!): Date
 
   # Get All votes (admins only)
-  allVotes: [Votes]
+  allVotes: [Vote]
   # Get a particular vote (admins only)
   voteById(id: Int!): Vote
 
@@ -82,7 +82,7 @@ type Query {
 ### Root Mutations ###
 type Mutation {
   # Creates a TodoList
-  createDate(input: DateListInput!): Date
+  createDate(input: DateInput!): Date
   # Update a TodoList
   updateDate(input: UpdateDateInput!): Date
   # Add a TodoTask to a TodoList

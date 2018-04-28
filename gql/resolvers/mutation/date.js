@@ -13,7 +13,7 @@ module.exports = {
     return date;
   },
 
-  addUsersToDate: async (_, {
+  addUserToDate: async (_, {
     input: { userId, dateId }
   }, {
     req, res, models: { Date, User }

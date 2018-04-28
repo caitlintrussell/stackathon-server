@@ -36,7 +36,7 @@ const User = db.define('user', {
 User.prototype.correctPassword = function (candidatePwd) {
   return User.encryptPassword(candidatePwd, this.salt) === this.password
 }
-=
+
 User.prototype.canEditDate = function (date) {
   return this.isAdmin || date.users.some(user => user.userId  === this.id );
 }

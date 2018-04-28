@@ -1,13 +1,8 @@
-const Query = require('./Query')
+const Query = require('./query')
+const Mutation = require('./mutation')
 
-const Mutation = require('./Mutation')
-
-const TodoList = require('./TodoList');
-const User = require('./User');
 
 module.exports = {
   Query,
-  Mutation,
-  TodoList,
-  User,
+  Mutation
 }

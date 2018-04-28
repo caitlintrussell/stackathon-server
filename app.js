@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 8080;
 const app = express();
 
 const notProduction = process.env.NODE_ENV !== 'production';
-if (notProduction) require('../secrets');
+if (notProduction) require('./secrets');
 
 // passport registration
 passport.serializeUser((user, done) => done(null, user.id));

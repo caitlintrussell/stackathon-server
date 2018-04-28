@@ -94,7 +94,7 @@ type Mutation {
   # POST
   addVote(input: VoteInput!): Vote
   # PUT
-  updateVote(input: updateVote!): Vote
+  updateVote(input: UpdateVoteInput!): Vote
   # DELETE
   removeVote(input: RemoveVoteInput!): Int
   # Signup (returns the user just signed up)

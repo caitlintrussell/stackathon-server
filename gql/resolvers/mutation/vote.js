@@ -15,7 +15,7 @@ module.exports = {
   },
 
   updateVote: async (_, {
-    input: { voteId, value }
+    input: { input: {voteId, value } }
   }, {
     req, res, models: { Date, User, Vote }
   }) => {

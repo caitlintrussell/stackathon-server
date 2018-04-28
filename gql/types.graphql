@@ -14,7 +14,7 @@ type Date @model {
   initiator: String!
   zipCode: String!
   noOfMembers: Int!
-  members: [User!]!
+  members: [User!]
 }
 
 type Vote @model {
@@ -31,7 +31,11 @@ input DateInput {
   name: String!
   initiator: String!
   zipCode: String!
-  members: [User]
+}
+
+input AddUserToDate {
+  userId: Int!
+  dateId: Int!
 }
 
 input UpdateDateInput {
@@ -40,12 +44,13 @@ input UpdateDateInput {
 }
 
 input VoteInput {
+  dateId: Int!
   value: String!
 }
 
 input UpdateVoteInput {
   voteId: Int!
-  input: VoteInput!
+  value: String!
 }
 
 input RemoveVoteInput {
@@ -61,17 +66,12 @@ input UserInput {
 type Query {
   # ADMIN
   allDates: [Date]
-  # Dates.findById INCLUDE users
+  # Dates.findById INCLUDE users and votes
   dateById(id: Int!): Date
-
   # ADMIN
   allVotes: [Vote]
   # Vote.findById MUST BE SELF
   voteById(id: Int!): Vote
-
-  # DatebyId INCLUDE Votes
-  allVotesForDate: [Date]
-
   # ADMIN
   allUsers: [User]
   # ADMIN
@@ -90,13 +90,13 @@ type Mutation {
   createDate(input: DateInput!): Date
   # PUT
   updateDate(input: UpdateDateInput!): Date
+  addUserToDate(input: AddUserToDate!): Date
   # POST
   addVote(input: VoteInput!): Vote
   # PUT
   updateVote(input: updateVote!): Vote
   # DELETE
   removeVote(input: RemoveVoteInput!): Int
-
   # Signup (returns the user just signed up)
   signup(input: UserInput!): User
   # Login (returns the user just logged in)

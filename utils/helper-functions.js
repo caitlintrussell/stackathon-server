@@ -35,6 +35,11 @@ const userCanEditDate = async (req, res, dateId) => {
       as: 'users',
       required: false,
       through: { attributes: [] },
+    }, {
+      model: Vote,
+      as: 'votes',
+      required: false,
+      through: { attributes: [] },
     }],
   });
   if (!date) {
@@ -61,11 +66,13 @@ const userCanEditVote = async (req, res, voteId) => {
     res.status(403);
     throw new Error('Forbidden');
   }
-  return date;
+  return vote;
 }
 
 module.exports = {
   userIsLoggedIn,
+  userCanEditDate,
+  userCanEditVote,
   userIsAdmin,
   doNumTimes,
 }

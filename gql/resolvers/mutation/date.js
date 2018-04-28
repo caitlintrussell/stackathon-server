@@ -1,38 +1,41 @@
-const { userIsLoggedIn } = require('../utils');
+const { userIsLoggedIn, userCanEditDate } = require('../../../utils/helper-functions');
 
 module.exports = {
-
   createDate: async (_, {
-    input: { name, initiator, zipCode }
+    input: { name, zipCode }
   }, {
     req, res, models: { Date, User }
   }) => {
     userIsLoggedIn(req, res);
     const user = await User.findById(req.user.id);
-    const date = await Date.create({ name, initiator, zipCode, members });
-    user.addDate(date);
+    const date = await Date.create({ name, zipCode });
+    date.setUsers(user);
+    return date;
+  },
+
+  addUsersToDate: async (_, {
+    input: { userId, dateId }
+  }, {
+    req, res, models: { Date, User }
+  }) => {
+    userIsLoggedIn(req, res);
+    const user = await User.findById({ userId });
+    const date = await Date.findById({ dateId });
+    date.setUsers(user);
     return date;
   },
 
   updateDate: async (_, {
-    input: { dateId, input: { name, description } }
+    input: { dateId, input: { name, initiator, zipCode} }
   }, {
     req, res
   }) => {
-    const todoList = await userCanEditTodoList(req, res, dateId);
+    const date = await userCanEditDate(req, res, dateId);
     const newData = {};
     if (name !== undefined) newData.name = name;
-    if (description !== undefined) newData.description = description;
-    return todoList.update(newData);
-  },
-
-  addDate: async (_, {
-    input: { dateId, input: { title, text, completed } }
-  }, {
-    req, res, models: { TodoTask }
-  }) => {
-    const todoList = await userCanEditTodoList(req, res, todoListId);
-    return todoList.addTodoTask(await TodoTask.create({ title, text, completed }));
+    if (initiator !== undefined) newData.initiator = initiator;
+    if (zipCode !== undefined) newData.zipCode = zipCode;
+    return date.update(newData);
   },
 
 }

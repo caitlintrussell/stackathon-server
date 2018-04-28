@@ -8,7 +8,7 @@ const User = require('./user');
 User.hasMany(Vote);
 Vote.belongsTo(User);
 
-Date.belongsToMany(User, {through: 'UserDate'});
+Date.belongsToMany(User, {through: 'UserDate', onDelete: 'cascade',});
 User.belongsToMany(Date, {through: 'UserDate'});
 
 Date.hasMany(Vote);

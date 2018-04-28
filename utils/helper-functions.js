@@ -7,7 +7,6 @@ const doNumTimes = (times, func) => {
   return results;
 }
 
-const { TodoList, TodoTask } = require('../../postgres/models');
 
 // Confirms that the user is logged in
 const userIsLoggedIn = (req, res) => {
@@ -28,31 +27,42 @@ const userIsAdmin = (req, res) => {
 
 // Confirms that the user (stored in req.user) can edit the todoList which
 // corresponds to todoListId. If so, returns that todoList.
-// const userCanEditTodoList = async (req, res, todoListId) => {
-//   userIsLoggedIn(req, res);
-//   const todoList = await TodoList.findById(todoListId);
-//   if (!todoList) {
-//     res.status(404);
-//     throw new Error('Not Found');
-//   }
-// (todoList)) {
-//     res.status(403);
-//     throw new Error('Forbidden');
-//   }
-//   return todoList;
-// }
+const userCanEditDate = async (req, res, dateId) => {
+  userIsLoggedIn(req, res);
+  const date = await Date.findById(dateId, {
+    include: [{
+      model: User,
+      as: 'users',
+      required: false,
+      through: { attributes: [] },
+    }],
+  });
+  if (!date) {
+    res.status(404);
+    throw new Error('Not Found');
+  }
+ if (!req.user.canEditDate(date)) {
+    res.status(403);
+    throw new Error('Forbidden');
+  }
+  return date;
+}
 
-// // Confirms that the user (stored in req.user) can edit the todoTask which
-// // corresponds to todoTaskId. If so, this returns that todoTask.
-// const userCanEditTodoTask = async (req, res, todoTaskId) => {
-//   userIsLoggedIn(req, res);
-//   const todoTask = await TodoTask.findById(todoTaskId);
-//   if (!todoTask) {
-//     res.status(404);
-//     throw new Error('Not Found');
-//   }
-//   if (await userCanEditTodoList(req, res, todoTask.todoListId)) return todoTask;
-// }
+// Confirms that the user (stored in req.user) can edit the todoTask which
+// corresponds to todoTaskId. If so, this returns that todoTask.
+const userCanEditVote = async (req, res, voteId) => {
+  userIsLoggedIn(req, res);
+  const vote = await Vote.findById(voteId);
+  if (!vote) {
+    res.status(404);
+    throw new Error('Not Found');
+  }
+  if (!req.user.canEditDate(date)) {
+    res.status(403);
+    throw new Error('Forbidden');
+  }
+  return date;
+}
 
 module.exports = {
   userIsLoggedIn,

@@ -36,13 +36,13 @@ const User = db.define('user', {
 User.prototype.correctPassword = function (candidatePwd) {
   return User.encryptPassword(candidatePwd, this.salt) === this.password
 }
-
+=
 User.prototype.canEditDate = function (date) {
-  return this.isAdmin || date.userId === this.id;
+  return this.isAdmin || date.users.some(user => user.userId  === this.id );
 }
 
-User.prototype.canEditVote = function (date) {
-  return this.isAdmin || date.userId === this.id;
+User.prototype.canEditVote = function (vote) {
+  return this.isAdmin || vote.userId === this.id;
 }
 
 /**

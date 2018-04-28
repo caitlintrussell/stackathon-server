@@ -5,7 +5,7 @@ type User @model {
   name: String!
   email: String!
   phone: String!
-  dates: [DATE!]
+  dates: [Date!]
 }
 
 type Date @model {
@@ -22,7 +22,7 @@ type Vote @model {
   value: String!
 }
 
-type Categories @model {
+type Category @model {
   id: ID! @isUnique
   name: String!
 }
@@ -39,9 +39,13 @@ input UpdateDateInput {
   input: DateInput!
 }
 
-input AddVoteInput {
-  todoListId: Int!
-  input: TodoTaskInput!
+input VoteInput {
+  value: String!
+}
+
+input UpdateVoteInput {
+  voteId: Int!
+  input: VoteInput!
 }
 
 input RemoveVoteInput {
@@ -55,39 +59,42 @@ input UserInput {
 
 ### Root Queries ###
 type Query {
-  # Get All Dates (admins only)
+  # ADMIN
   allDates: [Date]
-  # Get a particular date by its id (admins only)
+  # Dates.findById INCLUDE users
   dateById(id: Int!): Date
 
-  # Get All votes (admins only)
+  # ADMIN
   allVotes: [Vote]
-  # Get a particular vote (admins only)
+  # Vote.findById MUST BE SELF
   voteById(id: Int!): Vote
 
-  # Get All users (admins only)
-  allUsers: [User]
-  # Get a particular user by their id (admins only)
-  userById(id: Int!): User
+  # DatebyId INCLUDE Votes
+  allVotesForDate: [Date]
 
-  # Describes the currently logged-in user
+  # ADMIN
+  allUsers: [User]
+  # ADMIN
+  userById(id: Int!): User
+  # SELF
   me: User
-  # me: Int
-    # Get All todoLists (admins only)
+  # ALL USERS
   allCategories: [Category]
-  # Get a particular todoList by its id (admins only)
+  # ALL USERS
   categoryById(id: Int!): Category
 }
 
 ### Root Mutations ###
 type Mutation {
-  # Creates a TodoList
+  # POST
   createDate(input: DateInput!): Date
-  # Update a TodoList
+  # PUT
   updateDate(input: UpdateDateInput!): Date
-  # Add a TodoTask to a TodoList
-  addVote(input: AddVoteInput!): Date
-  # Remove a TodoTask from a TodoList
+  # POST
+  addVote(input: VoteInput!): Vote
+  # PUT
+  updateVote(input: updateVote!): Vote
+  # DELETE
   removeVote(input: RemoveVoteInput!): Int
 
   # Signup (returns the user just signed up)

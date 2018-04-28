@@ -41,6 +41,10 @@ User.prototype.canEditDate = function (date) {
   return this.isAdmin || date.userId === this.id;
 }
 
+User.prototype.canEditVote = function (date) {
+  return this.isAdmin || date.userId === this.id;
+}
+
 /**
  * classMethods
  */

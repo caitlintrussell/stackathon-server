@@ -4,14 +4,13 @@ const db = require('../db');
 const Date = db.define('date', {
   initiator: {
     type: Sequelize.STRING,
-    unique: true,
     allowNull: false,
   },
   zipCode: {
     type: Sequelize.STRING,
-    unique: true,
     allowNull: false,
   }
 });
+const UserDate = db.define('userDate');
 
-module.exports = Date;
+module.exports = {Date, UserDate};

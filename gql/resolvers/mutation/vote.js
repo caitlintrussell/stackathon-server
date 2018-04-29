@@ -4,24 +4,23 @@ module.exports = {
   addVote: async (_, {
     input: { dateId, value }
   }, {
-    req, res, models: { Date, User, Vote }
+    req, res, models: { Vote }
   }) => {
     userIsLoggedIn(req, res);
-    const user = await User.findById(req.user.id);
     const vote = await Vote.create({value})
-    vote.userId = user;
-    vote.dateId = dateId;
+    vote.setUser(req.user.id);
+    vote.setDate(dateId);
     return vote;
   },
 
   updateVote: async (_, {
-    input: { input: {voteId, value } }
+    input: { voteId, value }
   }, {
-    req, res, models: { Date, User, Vote }
+    req, res, models: { Vote }
   }) => {
     userIsLoggedIn(req, res);
     const vote = await userCanEditVote(req, res, voteId);
-    return vote.update(value);
+    return vote.update({value});
   },
   removeVote: async (_,
     {

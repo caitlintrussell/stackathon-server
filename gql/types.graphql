@@ -10,16 +10,16 @@ type User @model {
 
 type Date @model {
   id: ID! @isUnique
-  name: String!
   initiator: String!
   zipCode: String!
-  noOfMembers: Int!
   members: [User!]
+  votes: [Vote!]
 }
 
 type Vote @model {
   id: ID! @isUnique
   value: String!
+  date: Date
 }
 
 type Category @model {
@@ -28,7 +28,6 @@ type Category @model {
 }
 
 input DateInput {
-  name: String!
   initiator: String!
   zipCode: String!
 }
@@ -90,6 +89,7 @@ type Mutation {
   createDate(input: DateInput!): Date
   # PUT
   updateDate(input: UpdateDateInput!): Date
+  # POST
   addUserToDate(input: AddUserToDate!): Date
   # POST
   addVote(input: VoteInput!): Vote

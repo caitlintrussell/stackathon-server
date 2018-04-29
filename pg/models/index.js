@@ -1,6 +1,6 @@
 
 
-const Date = require('./date');
+const {Date, UserDate} = require('./date');
 const Vote = require('./vote');
 const Category = require('./category');
 const User = require('./user');
@@ -8,16 +8,14 @@ const User = require('./user');
 User.hasMany(Vote);
 Vote.belongsTo(User);
 
-Date.belongsToMany(User, {through: 'UserDate', onDelete: 'cascade',});
-User.belongsToMany(Date, {through: 'UserDate'});
+Date.belongsToMany(User, {through: UserDate, onDelete: 'cascade'});
+User.belongsToMany(Date, {through: UserDate, as: 'members'});
 
 Date.hasMany(Vote);
 Vote.belongsTo(Date);
 
-Date.hasOne(Category);
-Category.belongsTo(Date);
-
 module.exports = {
+  UserDate,
   Date,
   Vote,
   Category,

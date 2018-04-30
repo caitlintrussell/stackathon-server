@@ -2,13 +2,13 @@ const { userIsLoggedIn, userCanEditDate } = require('../../../utils/helper-funct
 
 module.exports = {
   createDate: async (_, {
-    input: { initiator, zipCode }
+    input: { userId, initiator, zipCode, when }
   }, {
     req, res, models: { Date, User }
   }) => {
-    userIsLoggedIn(req, res);
-    const user = await User.findById(req.user.id);
-    const date = await Date.create({ initiator, zipCode });
+    // userIsLoggedIn(req, res);
+    const user = await User.findById(userId);
+    const date = await Date.create({ initiator, zipCode, when });
     date.setUsers(user);
     return date;
   },

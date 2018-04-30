@@ -35,6 +35,8 @@ type Category @model {
 input DateInput {
   initiator: String!
   zipCode: String!
+  when: String!
+  userId: Int!
 }
 
 input AddUserToDate {

@@ -21,7 +21,7 @@ const generateFakeVote = async () => {
       { value: 'thai', dateId: 4, userId: 3 },
       { value: 'italian', dateId: 4, userId: 5 },
   ]
-  for (vote of votes) {
+  for (let vote of votes) {
     await Vote.create(vote);
   }
 }

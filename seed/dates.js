@@ -8,26 +8,30 @@ const fakeDates = [
   {
     initiator: 'Caitlin Trussell',
     zipCode: '60647',
-    members: [1, 2, 9, 10],
+    when: 'May 4th, 8PM',
+    resolved: true,
   }, {
     initiator: 'Katy Collis',
     zipCode: '60647',
-    members: [5, 7, 8, 4],
+    when: 'May 28th 6PM',
+    resolved: true,
   }, {
     initiator: 'Allan Bott',
     zipCode: '60647',
-    members: [1, 6],
+    when: 'April 30th 7PM',
+    resolved: true,
   }, {
     initiator: 'Erica Westenberger',
     zipCode: '60647',
-    members: [2, 5, 3],
+    when: 'June 1st 9PM',
+    resolved: true,
   },
 ]
 
 const makeDates = async (dates) => {
   for (let date of dates) {
-    let {initiator, zipCode, members} = date;
-    await Date.create({initiator, zipCode})
+    let {initiator, zipCode, when, resolved} = date;
+    await Date.create({initiator, zipCode, when, resolved})
   }
 }
 

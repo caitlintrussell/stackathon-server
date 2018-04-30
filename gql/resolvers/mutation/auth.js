@@ -12,6 +12,7 @@ module.exports = {
   },
   login: async (_, {input: { email, password }}, { req, models: { User } }) => {
     const user = await User.findOne({ where: { email } });
+    console.log('hello????')
     if (!user) throw new Error('User Not Found');
     if (!user.correctPassword(password)) throw new Error('Incorrect Password');
     req.login(user, err => { if (err) throw new Error(err) });

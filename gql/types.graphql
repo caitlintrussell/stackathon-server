@@ -12,14 +12,19 @@ type Date @model {
   id: ID! @isUnique
   initiator: String!
   zipCode: String!
+  when: String!
+  resolved: Boolean!
   members: [User!]
+  memberCount: Int
   votes: [Vote!]
+  voteCount: Int
 }
 
 type Vote @model {
   id: ID! @isUnique
   value: String!
   date: Date
+  user: User
 }
 
 type Category @model {
